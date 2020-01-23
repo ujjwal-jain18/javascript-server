@@ -1,0 +1,21 @@
+{
+  "name": "javascript-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "execute":"node extra/patterns/diamond.js",
+    "execute1": "node extra/patterns/equilateral.js" 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ujjwal-jain18/javascript-server.git"
+    },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ujjwal-jain18/javascript-server/issues"
+  },
+  "homepage": "https://github.com/ujjwal-jain18/javascript-server#readme"
+}
