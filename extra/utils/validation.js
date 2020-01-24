@@ -1,7 +1,7 @@
- p=0;
- q=0;
- valid=[];
- invalid=[];
+ p = 0;
+ q = 0;
+ valid = [];
+ invalid = [];
   
  const users = [
      {
@@ -36,8 +36,7 @@ function validateEmail(a){
 
 function validateUsers(users){ 
    
-    users.forEach(
-        (element) => {
+    users.forEach((element) => {
  
         const {traineeEmail, reviewerEmail} = element;
        
@@ -47,14 +46,13 @@ function validateUsers(users){
         
         else q++;
         
-        check1=validateEmail(reviewerEmail);
+        check1 = validateEmail(reviewerEmail);
         
         if( check1 == true) p++;
         
         else q++;
         
-                      }
-                 )
+    })
  
 }
 
