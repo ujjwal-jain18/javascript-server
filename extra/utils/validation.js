@@ -1,5 +1,5 @@
- p = 0;
- q = 0;
+ validcount = 0;
+ invalidcount = 0;
  valid = [];
  invalid = [];
   
@@ -25,13 +25,13 @@ function validateEmail(a){
     
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((successive.tech))$/;
     
-    x = re.test(a);
+    match = re.test(a);
 
-    if( x == true)  valid.push(a);
+    if( match == true)  valid.push(a);
 
     else invalid.push(a);
  
-    return(x);
+    return(match);
 }
 
 function validateUsers(users){ 
@@ -42,16 +42,20 @@ function validateUsers(users){
        
         check = validateEmail(traineeEmail);
        
-        if( check == true) p++;
-        
-        else q++;
-        
+        if( check == true){
+             validcount++;
+        }
+        else{
+             invalidcount++;
+        }
         check1 = validateEmail(reviewerEmail);
         
-        if( check1 == true) p++;
-        
-        else q++;
-        
+        if( check1 == true){
+             validcount++;
+        }
+        else{
+             invalidcount++;
+        }
     })
  
 }
@@ -62,6 +66,6 @@ console.log(`valid Emails  \n${valid}`);
 
 console.log("invlaid Email \n"+invalid);
 
-console.log("valid count \n"+p);
+console.log("valid count \n"+validcount);
 
-console.log("invlaid count  \n"+q);
+console.log("invlaid count  \n"+invalidcount);
