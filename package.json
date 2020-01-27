@@ -8,7 +8,8 @@
     "execute": "node extra/patterns/diamond.js",
     "execute1": "node extra/patterns/equilateral.js",
     "execute2": "node extra/utils/validation.js",
-    "execute3": "node extra/utils/permission.js"
+    "execute3": "node extra/utils/permission.js",
+    "execute4": "npx babel-node extra"
   },
   "repository": {
     "type": "git",
@@ -25,4 +26,5 @@
     "@babel/node": "^7.8.3",
     "@babel/preset-env": "^7.8.3"
   }
+
 }
