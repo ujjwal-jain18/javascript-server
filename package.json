@@ -3,12 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm run lint"
-    }
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "execute": "node extra/patterns/diamond.js",
@@ -20,7 +14,9 @@
     "start:extraTs": "tsc-watch --project . --onSuccess \"npm run nodemon\"",
     "nodemon": "nodemon ./dist/index.js",
     "lint": "./node_modules/tslint/bin/tslint -c tslint.json -p tsconfig.json --exclude 'node_modules/**/*.{j,t}s'",
-    "lint:fix": "npm run lint --fix"
+    "lint:fix": "npm run lint --fix",
+        "pre-commit": "npm run lint",
+        "pre-push": "npm run lint"
   },
   "repository": {
     "type": "git",
