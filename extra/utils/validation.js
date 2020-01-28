@@ -1,71 +1,44 @@
- validcount = 0;
- invalidcount = 0;
- valid = [];
- invalid = [];
+let  validcount = 0;
+ let invalidcount = 0;
+ let valid = [];
+ let invalid = [];
   
- const users = [
-     {
-    traineeEmail: "ujjwal.jain@successive.tech",
-    reviewerEmail:"preet.saxena@successive.tech",
-     },
-
-     {
-    traineeEmail: "ujjwal.jainsuccessive.tech",
-    reviewerEmail:"preeta@succesive.tech",
-    },
-
-    {
-    traineeEmail: "ujju.jain@successive.tech",
-    reviewerEmail:"preet@successive.tech",
-    },
-
-];
-
-function validateEmail(a){
-    
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((successive.tech))$/;
-    
-    match = re.test(a);
-
-    if( match == true)  valid.push(a);
-
-    else invalid.push(a);
  
-    return(match);
-}
 
-function validateUsers(users){ 
+import {validateEmail} from"./helper";
+
+export default function validateUsers(users){ 
    
     users.forEach((element) => {
  
         const {traineeEmail, reviewerEmail} = element;
        
-        check = validateEmail(traineeEmail);
+        let check = validateEmail(traineeEmail);
        
         if( check == true){
              validcount++;
+             valid.push(traineeEmail);
         }
         else{
              invalidcount++;
+             invalid.push(traineeEmail);
         }
-        check1 = validateEmail(reviewerEmail);
+        let check1 = validateEmail(reviewerEmail);
         
         if( check1 == true){
              validcount++;
+             valid.push(reviewerEmail);
         }
         else{
              invalidcount++;
+             invalid.push(reviewerEmail);
         }
     })
  
-}
 
-validateUsers(users);
-  //console.log("valid Email"+valid);
-console.log(`valid Emails  \n${valid}`);
-
-console.log("invlaid Email \n"+invalid);
 
 console.log("valid count \n"+validcount);
-
+console.log ("valid email\n" +valid);
 console.log("invlaid count  \n"+invalidcount);
+console.log("invalid email\n"+invalid);
+}
