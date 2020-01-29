@@ -1,7 +1,3 @@
-import haspermissions from "./permission";
-
-export {haspermissions};
-
-import validateUsers from "./validation";
-
-export {validateUsers};
+import haspermissions from './permission';
+import validateUsers from './validation';
+export {haspermissions,validateUsers};
