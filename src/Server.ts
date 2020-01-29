@@ -6,17 +6,17 @@ class Server {
   constructor(private config: Iconfig) {
     this.app = express();
   }
-  bootstrap() {
+  bootstrap(): Server  {
     this.setupRoutes();
     return this;
   }
-  setupRoutes() {
+  setupRoutes(): void {
     this.app.get('/health-check', (req: express.Request, res: express.Response) => {
         res.send('I am OK');
       }
     );
   }
-  run() {
+  run(): Server {
     this.app.listen(this.config.port, (err: any) => {
       if (err) {
         console.log(err);
