@@ -23,7 +23,8 @@
         "dist"
     ],
     "include": [
-        "extraTs"
+        "src",
+        "extraTS"
     ],
     "types": [
         "src/types"
