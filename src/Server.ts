@@ -3,6 +3,7 @@ import Iconfig from './config/Iconfig';
 import * as bodyParser from 'body-parser';
 import notFound from './libs/Routes/notFoundRoute';
 import ErrorHandler from './libs/Routes/ErrorHandler';
+import router from './Router';
 class Server {
   app: express.Application;
   constructor(private config: Iconfig) {
@@ -20,11 +21,12 @@ class Server {
    this.app.use(bodyParser.json());
   }
 
-  setupRoutes(): void {
+  setupRoutes(): any {
     this.app.get('/health-check', (req: express.Request, res: express.Response) => {
       res.send('I am OK');
     }
   );
+    this.app.use('/api', router);
     this.app.use(notFound);
     this.app.use(ErrorHandler);
   }
