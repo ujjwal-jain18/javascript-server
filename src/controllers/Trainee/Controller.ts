@@ -35,7 +35,7 @@ class TraineeController {
         });
     }
     list(req: Request , res: Response ) {
-        console.log('::TRAINEE LIST:::::');
+        console.log('::TRAINEE LIST:::::zfjgkergj');
         res.send({
             Status: 'Ok' ,
             messages: 'Trainee Listed successfully',

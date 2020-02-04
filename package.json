@@ -26,7 +26,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "execute": "node extra/patterns/diamond.js",
+    "execute": "node ./extra/patterns/diamond.js",
     "execute1": "node extra/patterns/equilateral.js",
     "execute2": "node extra/utils/validation.js",
     "execute3": "node extra/utils/permission.js",
@@ -35,7 +35,7 @@
     "start:extraTs": "tsc-watch --project . --onSuccess \"npm run nodemonE\"",
     "start:src": "tsc-watch --project . --onSuccess \"npm run nodemon\"",
     "aaa": "tsc-watch --project . --onSuccess \"npm run nodemon\"",
-    "nodemon": "nodemon ./dist/index.js",
+    "nodemon": "nodemon ./dist/src/index.js",
     "nodemonE": "nodemon ./dist/extraTs/index.js",
     "lint": "./node_modules/tslint/bin/tslint -c tslint.json -p tsconfig.json --exclude 'node_modules/**/*.{j,t}s'",
     "lint:fix": "npm run lint --fix",
