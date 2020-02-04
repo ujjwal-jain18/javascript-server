@@ -4,14 +4,17 @@ import * as bodyParser from 'body-parser';
 import notFound from './libs/Routes/notFoundRoute';
 import ErrorHandler from './libs/Routes/ErrorHandler';
 import router from './Router';
+
+
+
 class Server {
   app: express.Application;
   constructor(private config: Iconfig) {
     this.app = express();
   }
   bootstrap(): Server  {
-    this.setupRoutes();
     this.BodyParser();
+    this.setupRoutes();
     return this;
   }
    BodyParser(): void {
