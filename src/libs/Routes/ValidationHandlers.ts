@@ -2,15 +2,15 @@ import { Request, Response, NextFunction } from 'express';
 function checkRegex(stringtovalidate: string, regex: RegExp): boolean {
     return regex.test(stringtovalidate);
 }
-export default (config) => (req: Request, res: Response, next: NextFunction) => {
-    const dataToValidate = req.body;
-    const dataFromParams = req.params;
-    const dataFromQuery = req.query;
-    const errors = [];
+export default (config: object) => (req: Request, res: Response, next: NextFunction): void => {
+    const dataToValidate: any = req.body;
+    const dataFromParams: any = req.params;
+    const dataFromQuery: any = req.query;
+    const errors: any = [];
 
     console.log('CONFIG', config);
     console.log('Body', dataToValidate);
-    const validationKeys = Object.keys(config);
+    const validationKeys: any = Object.keys(config);
     validationKeys.forEach(validateKey => {
         const validationRules = config[validateKey];
         let requireFlag = false;
