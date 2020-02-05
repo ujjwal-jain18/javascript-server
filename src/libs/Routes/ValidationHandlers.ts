@@ -84,4 +84,5 @@ export default (config: object) => (req: Request, res: Response, next: NextFunct
     }
   });
    console.log('errors', errors );
+   next();
 };
