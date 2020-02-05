@@ -7,9 +7,6 @@ export default (config: object) => (req: Request, res: Response, next: NextFunct
     const dataFromParams: any = req.params;
     const dataFromQuery: any = req.query;
     const errors: any = [];
-
-    console.log('CONFIG', config);
-    console.log('Body', dataToValidate);
     const validationKeys: any = Object.keys(config);
     validationKeys.forEach(validateKey => {
         const validationRules = config[validateKey];
@@ -83,6 +80,11 @@ export default (config: object) => (req: Request, res: Response, next: NextFunct
                 }
     }
   });
-   console.log('errors', errors );
-   next();
+  
+  if (errors.length > 0) {
+   res.send(errors);
+  }
+    else {
+          next();
+    }
 };
