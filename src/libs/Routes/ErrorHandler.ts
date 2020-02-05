@@ -1,4 +1,4 @@
-const ErrorHandler: any = (err: any , req: any, res: any, next: any) => {
+const   ErrorHandler: any = (err: any , req: any, res: any, next: any) => {
     console.log('Error', err);
     res.send({
         error: 'Not Found',
