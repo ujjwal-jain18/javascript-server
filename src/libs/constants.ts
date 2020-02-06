@@ -1,4 +1,4 @@
-import { IPERM } from './interface';
+import IPERM  from './interface';
 
 const permissions: IPERM = {
 'getUsers': {

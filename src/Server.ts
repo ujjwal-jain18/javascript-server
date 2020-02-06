@@ -4,9 +4,10 @@ import * as bodyParser from 'body-parser';
 import notFound from './libs/Routes/notFoundRoute';
 import ErrorHandler from './libs/Routes/ErrorHandler';
 import router from './Router';
+import Database from './libs/Database';
+import configuration from './config/configuration';
 
-
-
+const {MongoUri} = configuration;
 class Server {
   app: express.Application;
   constructor(private config: Iconfig) {
@@ -34,14 +35,20 @@ class Server {
     this.app.use(ErrorHandler);
   }
   run(): Server {
-    this.app.listen(this.config.port, (err: any) => {
-      if (err) {
+    Database.open ( MongoUri )
+    .then((msg) =>{
+      console.log(msg);
+      this.app.listen(this.config.port, (err: any) => {
+        if (err) {
+          console.log(err);
+          throw err;
+        }
+        console.log(`server is running on ${this.config.port}`);
+      });
+    }).catch((err)  => {
         console.log(err);
-        throw err;
-      }
-      console.log(`server is running on ${this.config.port}`);
-    });
-    return this;
-  }
+      });
+  return this;
+    }
 }
 export default Server;

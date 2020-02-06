@@ -3,6 +3,7 @@ function checkRegex(stringtovalidate: string, regex: RegExp): boolean {
     return regex.test(stringtovalidate);
 }
 export default (config: object) => (req: Request, res: Response, next: NextFunction): void => {
+
     const dataToValidate: any = req.body;
     const dataFromParams: any = req.params;
     const dataFromQuery: any = req.query;
@@ -22,65 +23,70 @@ export default (config: object) => (req: Request, res: Response, next: NextFunct
                 errors.push('error is occured');
             }
             };
+        const validator = ( validationRulescheck: any, validateKeycheck: any, data: any ) => {
+
+            if (Object.keys(validationRulescheck).includes('required') )  {
+                    if (validationRulescheck.required === true) {
+                        requireFlag = true;
+                    } else if (validationRulescheck.required === false || Object.keys(data).includes(validateKeycheck) ) {
+                        requireFlag = true;
+                      }
+            }
+            if (requireFlag === true) {
+                if (Object.keys(validationRulescheck).includes('string')) {
+                    if (validationRulescheck.string && typeof data[validateKeycheck] === 'string' ) {//
+                    }
+                    else {
+                        errorchecker (validationRulescheck, validateKeycheck );
+                    }
+                }
+                if (Object.keys(validationRulescheck).includes('number')) {
+                    if (validationRulescheck.number === true && typeof data[validateKeycheck] === 'number' ) {//
+                    }
+                    else {
+                        errorchecker (validationRulescheck, validateKeycheck );
+                    }
+                }
+                if (Object.keys(validationRulescheck).includes('isObject')) {
+                    if (validationRulescheck.number === true && data[validateKeycheck]  === true ) {//
+                    }
+                    else {
+                        errorchecker (validationRulescheck, validateKeycheck );
+                    }
+                }
+                if (Object.keys(validationRulescheck).includes('regex')) {
+                    if (checkRegex(data[validateKeycheck], validationRulescheck.regex) ){//
+                    }
+                    else {
+                        errorchecker (validationRulescheck, validateKeycheck );
+                    }
+                }
+                if (Object.keys(validationRulescheck).includes('default')) {
+                    if ( (validationRulescheck.default === '0' && data[validateKeycheck] === 'skip' )
+                    || (validationRulescheck.default === '10' && data[validateKeycheck] === 'limit' )) {//
+                    }
+                    else {
+                        errorchecker (validationRulescheck, validateKeycheck );
+                    }
+                }
+            }
+        };
 
     if (Object.keys(validationRules).includes('in')) {
-        if (
-                (validationRules.in.includes('body') && Object.keys(dataToValidate).includes(validateKey))
-                || (validationRules.in.includes('param') && Object.keys(dataFromParams).includes(validateKey))
-                || (validationRules.in.includes('query') && Object.keys(dataFromQuery).includes(validateKey))
-            ) {
-                    if (Object.keys(validationRules).includes('required') )  {
-                        if (validationRules.required === true) {
-                            requireFlag = true;
-                        } else if (validationRules.required === false || Object.keys(dataToValidate).includes(validateKey) ) {
-                            requireFlag = true;
-                          }
-                    }
-                if (requireFlag === true) {
-                    if (Object.keys(validationRules).includes('string')) {
-                        if (validationRules.string && typeof dataToValidate[validateKey] === 'string' ) {//
-                        }
-                        else {
-                            errorchecker (validationRules, validateKey );
-                        }
-                    }
-                    if (Object.keys(validationRules).includes('number')) {
-                        if (validationRules.number === true && typeof dataToValidate[validateKey] === 'number' ) {//
-                        }
-                        else {
-                            errorchecker (validationRules, validateKey );
-                        }
-                    }
-                    if (Object.keys(validationRules).includes('isObject')) {
-                        if (validationRules.number === true && dataToValidate[validateKey]  === true ) {//
-                        }
-                        else {
-                            errorchecker (validationRules, validateKey );
-                        }
-                    }
-                    if (Object.keys(validationRules).includes('regex')) {
-                        if (checkRegex(dataToValidate[validateKey], validationRules.regex) ){//
-                        }
-                        else {
-                            errorchecker (validationRules, validateKey );
-                        }
-                    }
-                    if (Object.keys(validationRules).includes('default')) {
-                        if ( (validationRules.default === '0' && dataToValidate[validateKey] === 'skip' )
-                        || (validationRules.default === '10' && dataToValidate[validateKey] === 'limit' )) {//
-                        }
-                        else {
-                            errorchecker (validationRules, validateKey );
-                        }
-                    }
-                }
+        if ((validationRules.in.includes('body') && Object.keys(dataToValidate).includes(validateKey))) {
+                    validator (validationRules, validateKey, dataToValidate);
         }
-                else  {
-                    errorchecker (validationRules, validateKey );
-                }
+        else if (validationRules.in.includes('param') && Object.keys(dataFromParams).includes(validateKey)) {
+                    validator (validationRules, validateKey, dataFromParams);
+        }
+        else if (validationRules.in.includes('query') && Object.keys(dataFromQuery).includes(validateKey)) {
+                    validator (validationRules, validateKey, dataFromQuery);
+        } else {
+              errorchecker (validationRules, validateKey );
+          }
     }
   });
-  
+
   if (errors.length > 0) {
    res.send(errors);
   }
