@@ -36,7 +36,7 @@ class Server {
   }
   run(): Server {
     Database.open ( MongoUri )
-    .then((msg) =>{
+    .then((msg) => {
       console.log(msg);
       this.app.listen(this.config.port, (err: any) => {
         if (err) {

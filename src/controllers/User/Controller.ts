@@ -19,9 +19,9 @@ class UserController {
 
         console.log('::CREATE USER:::::');
 
-        const userdata = req.body;
+        const userData = req.body;
 
-        this.userRepository.create(userdata)
+        this.userRepository.create(userData)
 
         .then((user: any) => {
             return SystemResponse.success(res, user, 'User Added Successfully');
@@ -35,9 +35,9 @@ class UserController {
     update = (req: Request , res: Response ) => {
         console.log('::UPDATE USER:::::');
 
-        const userdata = req.body;
+        const userData = req.body;
 
-        this.userRepository.update(userdata.id, userdata)
+        this.userRepository.update(userData.id, userData)
 
         .then((user: any) => {
             return SystemResponse.success(res, user, 'User Updated Successfully');
@@ -49,9 +49,6 @@ class UserController {
     }
     list = (req: Request , res: Response ) => {
         console.log('::USER LIST:::::');
-
-        const userdata = req.body;
-
 
         this.userRepository.list()
 
@@ -66,10 +63,10 @@ class UserController {
     delete = (req: Request , res: Response ) => {
         console.log('::Delete USER:::::');
 
-        const userdata = req.params;
+        const userData = req.params;
 
 
-        this.userRepository.delete(userdata.id)
+        this.userRepository.delete(userData.id)
 
         .then((user: any) => {
             return SystemResponse.success(res, user, 'User Deleted Successfully');
