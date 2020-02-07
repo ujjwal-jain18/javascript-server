@@ -29,7 +29,7 @@ class UserRepository {
 
    delete = (id: string) => {
        if (id !== undefined) {
-        return this.userModel.deleteOne({id})
+        return this.userModel.deleteOne({id});
        } else {
            console.log('please enter the id');
         }

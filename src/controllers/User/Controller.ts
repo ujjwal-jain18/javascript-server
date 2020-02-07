@@ -28,7 +28,7 @@ class UserController {
         })
 
         .catch((error: any) => {
-            throw (error);
+            return SystemResponse.error(res, error, 'User Added UnSuccessfull');
         });
     }
 
@@ -44,7 +44,7 @@ class UserController {
         })
 
         .catch((error: any) => {
-            throw (error);
+            return SystemResponse.error(res, error, 'User Updated UnSuccessfull');
         });
     }
     list = (req: Request , res: Response ) => {
@@ -60,7 +60,7 @@ class UserController {
         })
 
         .catch((error: any) => {
-            throw (error);
+            return SystemResponse.error(res, error, 'No List Exist');
         });
     }
     delete = (req: Request , res: Response ) => {
@@ -76,7 +76,7 @@ class UserController {
         })
 
         .catch((error: any) => {
-            throw (error);
+            return SystemResponse.error(res, error, 'User Deleted UnSuccessfull');
         });
     }
 }
