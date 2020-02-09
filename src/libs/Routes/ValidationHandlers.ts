@@ -42,7 +42,7 @@ export default (config: object) => (req: Request, res: Response, next: NextFunct
                 && validationRulescheck.number === true
                 // tslint:disable-next-line: radix
                 && (isNaN( parseInt (data[validateKeycheck])))
-            ) { 
+            ) {
                 errorchecker (validationRulescheck, validateKeycheck );
             }
             if (
