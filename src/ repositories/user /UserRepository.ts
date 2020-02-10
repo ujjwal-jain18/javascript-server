@@ -10,11 +10,21 @@ class UserRepository {
     constructor() {
         this.userModel = userModel;
     }
+    public generateObjectId() {
+        return String(Mongoose.Types.ObjectId());
+    }
 
     create = (data: any) => {
+        const userdata = {
+            _id: this.generateObjectId(),
+            ... data,
+        };
         return this.userModel.create(data);
     };
 
+    findOne = (query: any): any => {
+        return this.userModel.findOne(query);
+    }
    count = () => {
     return this.userModel.countDocuments();
     }

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import UserRepository from '../../ repositories/user /UserRepository';
 import SystemResponse from '../../libs/SystemResponse';
 
@@ -40,7 +40,7 @@ class UserController {
         this.userRepository.update(userData.id, userData)
 
         .then((user: any) => {
-            return SystemResponse.success(res, user, 'User Updated Successfully');
+            return SystemResponse.success(res, userData, 'User Updated Successfully');
         })
 
         .catch((error: any) => {
