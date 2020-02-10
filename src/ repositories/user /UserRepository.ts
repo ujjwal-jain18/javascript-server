@@ -10,14 +10,25 @@ class UserRepository {
     constructor() {
         this.userModel = userModel;
     }
+    getObjectId() {
+        return String(Mongoose.Types.ObjectId());
+    }
 
     create = (data: any) => {
+        const userdata = {
+            _id: this.getObjectId(),
+            ... data,
+        };
         return this.userModel.create(data);
+    };
+
+    findOne = (query: any): any => {
+        return this.userModel.findOne(query);
     };
 
    count = () => {
     return this.userModel.countDocuments();
-    }
+    };
 
    update = (id: string, data: any) => {
     return this.userModel.findByIdAndUpdate(id, data);
@@ -33,6 +44,6 @@ class UserRepository {
        } else {
            console.log('please enter the id');
         }
-    }
+    };
 }
 export default UserRepository;
