@@ -4,8 +4,17 @@ import hasPermission from '../permissions';
 import { Response, NextFunction } from 'express';
 import UserRepository from '../../ repositories/user /UserRepository';
 import { IRequest } from '../interface';
+import ErrorHandler from './ErrorHandler';
 
 const userRepository = new UserRepository();
+
+const ErrorGenerator = (next: NextFunction, ) => {
+   return next({
+        staus: 401,
+        error: 'Unauthorized Access',
+        message: 'Unauthorized Access'
+    });
+}
 
 export default (moduleName: any , permissionType: any) => (req: IRequest, res: Response, next: NextFunction) => {
     console.log('------------AUTHMIDDLEWARE------------', moduleName, permissionType);
@@ -15,11 +24,7 @@ export default (moduleName: any , permissionType: any) => (req: IRequest, res: R
          const decodedUser = jwt.verify(token, secretKey);
 
          if (!decodedUser) {
-             return next({
-                staus: 403,
-                error: 'Unauthorized Access',
-                message: 'Unauthorized Access'
-            });
+             ErrorGenerator(next);
          }
 
          const {id, email} = decodedUser ;
@@ -28,30 +33,19 @@ export default (moduleName: any , permissionType: any) => (req: IRequest, res: R
 
          .then(result => {
              if (!result) {
-                return next({
-                    staus: 403,
-                    error: 'Unauthorized Access',
-                    message: 'User does not exist in Database'
-                });
+                ErrorGenerator(next);
              }
              req.user = result;
             const role: string = decodedUser.role;
 
             if (!hasPermission(moduleName, role, permissionType)) {
-                return next({
-                    staus: 403,
-                    error: 'Unauthorized Access',
-                    message: 'Unauthorized Access'
-                });
-            } console.log(role + ' has permission of ' + permissionType );
+                ErrorGenerator(next);
+            }
+            console.log(role + ' has permission of ' + permissionType );
             next();
         })
 
         .catch ((error: any) => {
-            return next({
-                staus: 403,
-                error: 'Unauthorized Access',
-                message: error.message
-            });
+            ErrorGenerator(next);
         });
 };

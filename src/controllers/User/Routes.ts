@@ -16,5 +16,5 @@ UserRouter.route('/:id')
 UserRouter.route('/me')
 .get(authMiddleWare('Users', 'all'), (req: IRequest, res: Response) => {
     res.send(req.user);
-});
+ });
 export default UserRouter;
