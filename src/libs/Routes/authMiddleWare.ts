@@ -8,7 +8,7 @@ import ErrorHandler from './ErrorHandler';
 
 const userRepository = new UserRepository();
 
-const ErrorGenerator = (next: NextFunction, ) => {
+const ErrorGenerator = (next: NextFunction) => {
    return next({
         staus: 401,
         error: 'Unauthorized Access',
