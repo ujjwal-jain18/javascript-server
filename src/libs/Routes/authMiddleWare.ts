@@ -4,7 +4,6 @@ import hasPermission from '../permissions';
 import { Response, NextFunction } from 'express';
 import UserRepository from '../../ repositories/user /UserRepository';
 import { IRequest } from '../interface';
-import ErrorHandler from './ErrorHandler';
 
 const userRepository = new UserRepository();
 
@@ -14,7 +13,7 @@ const ErrorGenerator = (next: NextFunction) => {
         error: 'Unauthorized Access',
         message: 'Unauthorized Access'
     });
-}
+};
 
 export default (moduleName: any , permissionType: any) => (req: IRequest, res: Response, next: NextFunction) => {
     console.log('------------AUTHMIDDLEWARE------------', moduleName, permissionType);

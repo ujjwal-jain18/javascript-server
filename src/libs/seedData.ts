@@ -9,6 +9,7 @@ export default () => {
         email: 'ujjwal.jain@successive.tech',
         Dob: new Date('04/18/1999'),
         mobileNumber: 9971780910,
+        role: 'head-trainer',
         hobbies: ['Singing', 'Chess' ],
      };
 
