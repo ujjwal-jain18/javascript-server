@@ -32,17 +32,8 @@ export default class VersioningRepository< D extends mongoose.Document , M exten
 
     }
     public async update(id, options): Promise<D> {
-        const _id = this.getObjectId();
-        this.newUpdatedData(id, options);
-        return this.modelType.findByIdAndUpdate(id, options, {
-            ...options,
-            deletedAt: Date.now(),
-            deletedBY: id
-        });
-
-    }
-    public async newUpdatedData(id, options): Promise<D> {
         const ID = this.getObjectId();
+        await this.newUpdatedData(id);
         return this.modelType.create({
             ...options,
             _id: ID,
@@ -51,12 +42,19 @@ export default class VersioningRepository< D extends mongoose.Document , M exten
             updatedBY: id
         });
     }
+    public async newUpdatedData(id): Promise<D> {
+        const data = await this.modelType.findByIdAndUpdate(id, {
+            deletedAt: Date.now(),
+            deletedBY: id
+        });
+        return data;
+    }
 
     public async list() {
         return this.modelType.find();
     }
 
     public async delete(id: string) {
-        return this.modelType.deleteOne({ id });
+       await this.newUpdatedData(id);
     }
 }
