@@ -35,7 +35,7 @@ export default (moduleName: any , permissionType: any) => (req: IRequest, res: R
                 ErrorGenerator(next);
              }
              req.user = result;
-            const role: string = decodedUser.role;
+            const role: string = req.user.role;
 
             if (!hasPermission(moduleName, role, permissionType)) {
                 ErrorGenerator(next);

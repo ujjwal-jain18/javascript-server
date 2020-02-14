@@ -7,12 +7,10 @@ class SystemResponse {
 
         });
       }
-      static error = (res: any , data: any, message: any = 'error occured'): any => {
-        return res.status(500).send({
-            status: 'not ok',
+      static error = (res: any , code: number, message: any = 'error occured'): any => {
+        return res.send({
+            status: code,
             message,
-            data
-
         });
       }
 }

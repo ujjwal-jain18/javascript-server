@@ -1,8 +1,15 @@
 import UserRepository from '../../src/ repositories/user /UserRepository';
+import * as bcrypt from 'bcrypt';
+import config from '../config/configuration';
 
 const userRepository = new UserRepository();
 
 export default () => {
+    bcrypt.hash(config.Password, 10, (err, hash) => {
+        if (err) {
+            console.error(err);
+        } else {
+        console.log('Data sedding is in progress');
     const user = {
         name: 'Trainee',
         address: 'Delhi',
@@ -11,8 +18,8 @@ export default () => {
         mobileNumber: 9971780910,
         role: 'head-trainer',
         hobbies: ['Singing', 'Chess' ],
+        Password: hash,
      };
-
      userRepository.count().then((count: number): any => {
 
          console.log('Count of Users is', count );
@@ -25,6 +32,7 @@ export default () => {
          } else {
              console.log('User is Already Seeded');
          }
-     }).catch((err: any) =>  console.error(err));
-
+     }).catch((error: any) =>  console.error(error));
+    }
+    });
 };

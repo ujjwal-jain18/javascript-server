@@ -1,4 +1,5 @@
 import IVersionableSchema from '../ versionable /VersionableSchema';
+import { stringify } from 'querystring';
 
 class UserSchema extends IVersionableSchema {
 
@@ -11,7 +12,8 @@ class UserSchema extends IVersionableSchema {
             Dob: Date,
             mobileNumber: Number,
             hobbies: [String],
-            role: String
+            role: String,
+            Password: String
         };
         super(userSchema, options);
     }

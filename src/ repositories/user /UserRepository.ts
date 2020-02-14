@@ -9,21 +9,21 @@ class UserRepository extends VersioningRepository<IUserModel, Mongoose.Model<IUs
     constructor () {
         super(userModel);
     }
-    create1 = (data: any) => {
+    createUser = (data: any) => {
         return super.create(data);
     };
     count() {
         return super.count();
     }
-    update1 = (id: string, data: any) => {
+    updateUSer = (id: string, data: any) => {
       return super.update(id, data);
     };
 
-   list1 = () => {
+    listOFUser = () => {
     return super.list();
     };
 
-   delete1 = (id: string) => {
+   deleteUser = (id: string) => {
        if (id !== undefined) {
         return super.delete(id);
        } else {

@@ -9,5 +9,6 @@ export default interface IUserModel extends IVersionableModel {
     mobileNumber: number;
     hobbies: string[];
     role: string;
+    Password: string;
 
 }
