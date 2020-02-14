@@ -3,9 +3,9 @@ import { IPERM }  from './interface';
 const permissions: IPERM = {
 'getUsers': {
     all: ['head-trainer'],
-    read: ['trainee', 'trainer'],
-    write: ['trainer'],
-    delete: [],
+    read: ['trainee', 'trainer', 'head-trainer'],
+    write: ['trainer', 'head-trainer'],
+    delete: ['head-trainer'],
 },
 'Users': {
     all: ['head-trainer'],

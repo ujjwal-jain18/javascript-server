@@ -8,12 +8,44 @@ const validation = {
                console.log('Value', value);
                throw { error: 'Error Occured', message: 'Message' };
         } },
-       name: {
+        name: {
            required: true,
            regex: /^[a-zA-Z]+(([,. -][a-zA-Z ])?[a-zA-Z]*)*$/,
            in: ['body'],
            errorMessage: 'Name is required',
-    }},
+        },
+        address: {
+            required: true,
+            in: ['body'],
+            string: true,
+            errorMessage: 'Address is required',
+        },
+        email: {
+            required: true,
+            string: true,
+            regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((successive.tech))$/,
+            in: ['body'],
+            errorMessage: 'Email is required',
+        },
+        mobileNumber: {
+            required: true,
+            number: true,
+            in: ['body'],
+            errorMessage: 'Number is required',
+        },
+        hobbies: {
+            in: ['body'],
+            required: true,
+            isObject: true,
+            errorMessage: 'hobbies is required'
+           },
+        role: {
+            in: ['body'],
+            required: true,
+            isObject: true,
+            errorMessage: 'role is required'
+        }
+},
    delete: {
        id: {
            required: true,
@@ -34,7 +66,15 @@ const validation = {
               number: true,
               in: ['query'],
               errorMessage: 'Limit is invalid',
-    } },
+            },
+        sortBy: {
+            required: false,
+              default: 'updatedAt',
+              string: true,
+              in: ['query'],
+              errorMessage: 'SortBy is invalid',
+        }
+    },
     update: {
         id: {
             required: true,

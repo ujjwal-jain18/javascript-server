@@ -39,9 +39,10 @@ export default (moduleName: any , permissionType: any) => (req: IRequest, res: R
 
             if (!hasPermission(moduleName, role, permissionType)) {
                 ErrorGenerator(next);
-            }
+            } else {
             console.log(role + ' has permission of ' + permissionType );
             next();
+            }
         })
 
         .catch ((error: any) => {

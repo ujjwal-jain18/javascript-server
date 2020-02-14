@@ -1,67 +1,90 @@
 import { Request, Response } from 'express';
+import UserRepository from '../../ repositories/user /UserRepository';
+import SystemResponse from '../../libs/SystemResponse';
 
 class TraineeController {
     static instance: any ;
+    private userRepository: UserRepository = new UserRepository() ;
     static getInstance() {
+
         if (TraineeController.instance) {
            return TraineeController.instance;
         }
+
         TraineeController.instance = new TraineeController();
         return TraineeController.instance;
     }
 
-    create(req: Request , res: Response ) {
-        console.log('::CREATE TRAINEE:::::');
-        res.send({
-            Status: 'Ok',
-            messages: 'Trainee Added successfully',
-            data : {
-                 id: 1,
-                 name: 'Trainee' ,
-                 address: 'Noida'
-            }
-        });
+    create = async (req: Request , res: Response ) => {
+        try {
+            console.log('::CREATE TRAINEE:::::');
+
+            const traineeData = req.body;
+
+            const trainee = await this.userRepository.createUser(traineeData);
+                if (!trainee) {
+                    return SystemResponse.error(res, 404, 'Trainee Added UnSuccessfull');
+                }
+                return SystemResponse.success(res, trainee , 'Trainee Added Successfully');
+        } catch (err) {
+            return SystemResponse.error(res, 404, 'Trainee Added UnSuccessfull');
+        }
     }
-    update(req: Request , res: Response ) {
-        console.log('::UPDATE TRAINEE:::::');
-        res.send({
-            Status: 'Ok',
-            messages: 'Trainee Updated successfully',
-            data : {
-                 id: 1,
-                 name: 'Trainee' ,
-                 address: 'Noida'
-            }
-        });
+
+    update = async (req: Request , res: Response ) => {
+        try {
+            console.log('::UPDATE TRAINEE:::::');
+
+            const traineeData = req.body;
+
+            const trainee = await this.userRepository.updateUser(traineeData.id, traineeData.dataToUpdate);
+                if (!trainee) {
+                    return SystemResponse.error(res, 404, 'Trainee Updated UnSuccessfull');
+                }
+                return SystemResponse.success(res, traineeData, 'Trainee Updated Successfully');
+        } catch (err) {
+            return SystemResponse.error(res, 404, 'Trainee Updated UnSuccessfull');
+        }
     }
-    list(req: Request , res: Response ) {
-        console.log('::TRAINEE LIST:::::');
-        res.send({
-            Status: 'Ok' ,
-            messages: 'Trainee Listed successfully',
-            data : [{
-                 id: 1,
-                 name: 'Trainee' ,
-                 address: 'Noida'
-            },
-            {
-                id: 2,
-                name: 'Trainee 1' ,
-                address: 'Noida'
-            }]
-        });
+    list = async (req: Request , res: Response ) => {
+        try {
+            console.log('::Trainee LIST:::::');
+            let sortBy;
+                    if (req.query.sortBy === 'email')
+                    sortBy = { email: 1 };
+                    else if (req.query.sortBy === 'name')
+                    sortBy = { name: 1 };
+                    else
+                    sortBy = {updatedAt: 1};
+
+            const trainee = await this.userRepository.listOFUser('trainee', sortBy, req.query.skip, req.query.limit);
+                if (!trainee) {
+                    return SystemResponse.error(res, 404, 'No List Exist');
+                }
+                const countTrainee = await this.userRepository.countTrainee();
+                const data = {
+                    count: countTrainee,
+                    records: trainee
+                };
+                return SystemResponse.success(res, data, 'List Of Trainees');
+        } catch (err) {
+            return SystemResponse.error(res, 404, err.message);
+        }
     }
-    delete(req: Request , res: Response ) {
-        console.log('::DELETE TRAINEE:::::');
-        res.send({
-            Status: 'Ok',
-            messages: 'Trainee Deleted successfully',
-            data : {
-                 id: 1,
-                 name: 'Trainee' ,
-                 address: 'Noida'
-            }
-        });
+    delete = async (req: Request , res: Response ) => {
+        try {
+            console.log('::Delete TRAIMEE::::');
+
+            const traineeData = req.params;
+
+            const trainee =  this.userRepository.deleteUser(traineeData.id);
+                if (!trainee) {
+                    return SystemResponse.error(res, 404, 'Trainee Deleted UnSuccessfull');
+                }
+                return SystemResponse.success(res, trainee, 'Trainee Deleted Successfully');
+        } catch (err) {
+            return SystemResponse.error(res, 404, 'Trainee Deleted UnSuccessfull');
+        }
     }
 }
 

@@ -69,10 +69,11 @@ export default (config: object) => (req: Request, res: Response, next: NextFunct
                 validator (validationRules, validateKey, dataFromParams);
             } else if (validationRules.in.includes('query') && Object.keys(dataFromQuery).includes(validateKey)) {
                 validator (validationRules, validateKey, dataFromQuery);
-            } else if (validationRules.includes ('skip') && validationRules.includes ('limit')) {
-                        req.params = {
+            } else if (validationRules === 'skip' && validationRules === 'limit' && validationRules === 'sortedBY' ) {
+                        req.query = {
                             skip: '0',
-                            limit: '10'
+                            limit: '10',
+                            sortBy: 'updatedAT'
                         };
             }
         }
