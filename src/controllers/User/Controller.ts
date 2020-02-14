@@ -31,8 +31,6 @@ class UserController {
         console.log('Password Matched');
 
         const token = jwt.sign({email: user.email, id: user.originalId}, config.secretKey);
-        console.log('hfuifauifu', user.email);
-        console.log('ujjjjj', user.originalId);
                 return SystemResponse.success(res, token , 'Login Successfully');
         } catch (err) {
             return SystemResponse.error(res, 422, err);

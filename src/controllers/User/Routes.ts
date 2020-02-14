@@ -9,7 +9,7 @@ const UserRouter = Router();
 
 UserRouter.route('/')
  .get( authMiddleWare('Users', 'all'), validationhandler(config.get), UserController.list)
-.post(authMiddleWare('Users', 'all'),validationhandler(config.create), UserController.create)
+.post(authMiddleWare('Users', 'all'), validationhandler(config.create), UserController.create)
 .put( authMiddleWare('Users', 'all'), validationhandler(config.update), UserController.update);
 
 UserRouter.route('/:id')
@@ -21,4 +21,5 @@ UserRouter.route('/me')
  });
 UserRouter.route('/login')
 .post(UserController.login);
+
 export default UserRouter;
