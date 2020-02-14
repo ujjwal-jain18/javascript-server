@@ -6,7 +6,7 @@ import { IRequest } from '../../libs/interface';
 const UserRouter = Router();
 
 UserRouter.route('/')
-.get( authMiddleWare('Users', 'all'), UserController.list)
+ .get( authMiddleWare('Users', 'all'), UserController.list)
 .post(authMiddleWare('Users', 'all'), UserController.create)
 .put( authMiddleWare('Users', 'all'), UserController.update);
 

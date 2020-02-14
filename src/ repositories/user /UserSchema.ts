@@ -1,6 +1,6 @@
-import * as mongoose from 'mongoose';
+import IVersionableSchema from '../ versionable /VersionableSchema';
 
-class UserSchema extends mongoose.Schema {
+class UserSchema extends IVersionableSchema {
 
     constructor(options: any) {
         const userSchema = {
