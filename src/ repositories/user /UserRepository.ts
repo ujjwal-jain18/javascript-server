@@ -15,12 +15,12 @@ class UserRepository extends VersioningRepository<IUserModel, Mongoose.Model<IUs
     count() {
         return super.count();
     }
-    updateUSer = (id: string, data: any) => {
+    updateUser = (id: string, data: any) => {
       return super.update(id, data);
     };
 
-    listOFUser = () => {
-    return super.list();
+    listOFUser = (userRole, sortBY, skip, limit) => {
+    return super.list(userRole, sortBY, skip, limit);
     };
 
    deleteUser = (id: string) => {

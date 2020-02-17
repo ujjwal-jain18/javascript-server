@@ -11,7 +11,7 @@ export default () => {
         } else {
         console.log('Data sedding is in progress');
     const user = {
-        name: 'Trainee',
+        name: 'Head-Trainer',
         address: 'Delhi',
         email: 'ujjwal.jain@successive.tech',
         Dob: new Date('04/18/1999'),
@@ -22,7 +22,7 @@ export default () => {
      };
      userRepository.count().then((count: number): any => {
 
-         console.log('Count of Users is', count );
+         console.log('Count of Trainee is', count );
 
          if (!count) {
              return userRepository.create(user)

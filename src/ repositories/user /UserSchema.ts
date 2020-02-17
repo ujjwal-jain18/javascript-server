@@ -1,5 +1,4 @@
 import IVersionableSchema from '../ versionable /VersionableSchema';
-import { stringify } from 'querystring';
 
 class UserSchema extends IVersionableSchema {
 
