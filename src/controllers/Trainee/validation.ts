@@ -27,6 +27,12 @@ const validation = {
             in: ['body'],
             errorMessage: 'Email is required',
         },
+        Password: {
+            required: true,
+            string: true,
+            in: ['body'],
+            errorMessage: 'Password is required',
+        },
         mobileNumber: {
             required: true,
             number: true,
@@ -73,6 +79,13 @@ const validation = {
               string: true,
               in: ['query'],
               errorMessage: 'SortBy is invalid',
+        },
+        search: {
+            required: false,
+              default: {},
+              string: true,
+              in: ['query'],
+              errorMessage: 'Search is invalid',
         }
     },
     update: {

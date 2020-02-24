@@ -25,7 +25,6 @@ export default (moduleName: any , permissionType: any) => (req: IRequest, res: R
          if (!decodedUser) {
              ErrorGenerator(next);
          }
-
          const {id, email} = decodedUser ;
 
          userRepository.findOne({_id: id, email})
