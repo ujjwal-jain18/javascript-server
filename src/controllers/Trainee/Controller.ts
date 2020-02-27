@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import UserRepository from '../../ repositories/user /UserRepository';
 import SystemResponse from '../../libs/SystemResponse';
+import { compileFunction } from 'vm';
 
 class TraineeController {
     static instance: any ;
@@ -20,7 +21,10 @@ class TraineeController {
             console.log('::CREATE TRAINEE:::::');
 
             const traineeData = req.body;
-
+            const useremail = { email: req.body.email};
+            if (this.userRepository.findOne(useremail) === undefined) {
+                return SystemResponse.error(res, 404, 'Trainee Added UnSuccessfull');
+            }
             const trainee = await this.userRepository.createUser(traineeData);
                 if (!trainee) {
                     return SystemResponse.error(res, 404, 'Trainee Added UnSuccessfull');
@@ -47,18 +51,24 @@ class TraineeController {
         }
     }
     list = async (req: Request , res: Response ) => {
+        let trainee: object;
         try {
             console.log('::Trainee LIST:::::');
-            let sortBy;
+            let sortBy: object;
                     if (req.query.sortBy === 'email')
                     sortBy = { email: 1 };
                     else if (req.query.sortBy === 'name')
                     sortBy = { name: 1 };
                     else
                     sortBy = {updatedAt: 1};
-
-            const trainee = await this.userRepository.listOFUser('trainee', sortBy, req.query.skip, req.query.limit);
-                if (!trainee) {
+            if (req.query.search !== undefined ) {
+                 trainee = await this.userRepository.listOFUser('trainee', req.query.skip, req.query.limit, sortBy, {name: { $regex: req.query.search.toLowerCase()}});
+                 const List = await this.userRepository.listOFUser('trainee', req.query.skip, req.query.limit, sortBy, {email: { $regex: req.query.search.toLowerCase()}});
+                 trainee = {...trainee, ...List };
+            } else {
+                    trainee = await this.userRepository.listOFUser('trainee', req.query.skip, req.query.limit, sortBy, {});
+            }
+             if (!trainee) {
                     return SystemResponse.error(res, 404, 'No List Exist');
                 }
                 const countTrainee = await this.userRepository.countTrainee();

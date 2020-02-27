@@ -28,8 +28,6 @@ class UserController {
             if (!isPasswordCorrect) {
                     return SystemResponse.error(res, 422, 'Password Does Not Exist');
             }
-        console.log('Password Matched');
-
         const token = jwt.sign({email: user.email, id: user.originalId}, config.secretKey, {expiresIn: 900});
                 return SystemResponse.success(res, token , 'Login Successfully');
         } catch (err) {

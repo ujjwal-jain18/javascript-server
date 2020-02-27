@@ -1,6 +1,4 @@
 import * as mongoose from 'mongoose';
-import IVersionableModel from '../ versionable /IVersionableDocument';
-import { stringify } from 'querystring';
 
 export default class VersioningRepository< D extends mongoose.Document , M extends mongoose.Model <D>> {
 
@@ -20,7 +18,7 @@ export default class VersioningRepository< D extends mongoose.Document , M exten
         return this.modelType.countDocuments({role: 'trainee', deletedAt: {$exists: false}});
         }
 
-    public findOne (query) {
+    public findOne(query) {
         return this.modelType.findOne(query);
     }
 
@@ -53,9 +51,9 @@ export default class VersioningRepository< D extends mongoose.Document , M exten
         });
         return data;
     }
-    public list(userRole, sortBy, skip, limit): Promise<D[]> {
-        return  this.modelType.find({role: userRole, deletedAt: undefined}).sort(sortBy).skip(Number(skip)).limit(Number(limit)).exec();
-    }
+    public list(userRole, skip, limit, sortBy, searchBy): Promise<D[]> {
+        return  this.modelType.find({role: userRole, deletedAt: undefined, ...searchBy}, {Password: 0}).sort(sortBy).skip(Number(skip)).limit(Number(limit)).exec();
+}
 
     public async delete(id: string) {
        await this.newUpdatedData(id);
