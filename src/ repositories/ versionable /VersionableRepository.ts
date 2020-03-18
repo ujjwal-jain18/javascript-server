@@ -51,8 +51,8 @@ export default class VersioningRepository< D extends mongoose.Document , M exten
         });
         return data;
     }
-    public list(userRole, skip, limit, sortBy, searchBy): Promise<D[]> {
-        return  this.modelType.find({role: userRole, deletedAt: undefined, ...searchBy}, {Password: 0}).sort(sortBy).skip(Number(skip)).limit(Number(limit)).exec();
+    public list(userRole, options, searchBy): Promise<D[]> {
+        return  this.modelType.find({role: userRole, deletedAt: undefined, ...searchBy}, {Password: 0}).sort(options.sort).skip(Number(options.skip)).limit(Number(options.limit)).exec();
 }
 
     public async delete(id: string) {

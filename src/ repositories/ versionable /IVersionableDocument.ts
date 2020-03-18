@@ -7,7 +7,7 @@ interface IVersionableModel extends mongoose.Document {
     updatedBY: string;
     deletedAt: Date;
     deletedBY: string;
-    originalId: any;
+    originalId: string;
 
 }
 export default IVersionableModel;

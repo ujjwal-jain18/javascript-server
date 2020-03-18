@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import UserRepository from '../../ repositories/user /UserRepository';
 import SystemResponse from '../../libs/SystemResponse';
-import { compileFunction } from 'vm';
 
 class TraineeController {
     static instance: any ;
@@ -18,8 +17,6 @@ class TraineeController {
 
     create = async (req: Request , res: Response ) => {
         try {
-            console.log('::CREATE TRAINEE:::::');
-
             const traineeData = req.body;
             const useremail = { email: req.body.email};
             if (this.userRepository.findOne(useremail) === undefined) {
@@ -37,8 +34,6 @@ class TraineeController {
 
     update = async (req: Request , res: Response ) => {
         try {
-            console.log('::UPDATE TRAINEE:::::');
-
             const traineeData = req.body;
 
             const trainee = await this.userRepository.updateUser(traineeData.id, traineeData.dataToUpdate);
@@ -53,7 +48,6 @@ class TraineeController {
     list = async (req: Request , res: Response ) => {
         let trainee: object;
         try {
-            console.log('::Trainee LIST:::::');
             let sortBy: object;
                     if (req.query.sortBy === 'email')
                     sortBy = { email: 1 };
@@ -61,13 +55,25 @@ class TraineeController {
                     sortBy = { name: 1 };
                     else
                     sortBy = {updatedAt: 1};
+
+            const options = {
+                    skip: req.query.skip,
+                    limit: req.query.limit,
+                    sort: sortBy,
+                    };
+
+            const searchBy = {
+                name: { name: { $regex: req.query.search.toLowerCase()}},
+                email: { email : { $regex: req.query.search.toLowerCase()}},
+            }
             if (req.query.search !== undefined ) {
-                 trainee = await this.userRepository.listOFUser('trainee', req.query.skip, req.query.limit, sortBy, {name: { $regex: req.query.search.toLowerCase()}});
-                 const List = await this.userRepository.listOFUser('trainee', req.query.skip, req.query.limit, sortBy, {email: { $regex: req.query.search.toLowerCase()}});
+                 trainee = await this.userRepository.listOFUser('trainee', options, searchBy.name);
+                 const List = await this.userRepository.listOFUser('trainee', options , searchBy.email);
                  trainee = {...trainee, ...List };
             } else {
-                    trainee = await this.userRepository.listOFUser('trainee', req.query.skip, req.query.limit, sortBy, {});
+                    trainee = await this.userRepository.listOFUser('trainee', options , {});
             }
+
              if (!trainee) {
                     return SystemResponse.error(res, 404, 'No List Exist');
                 }
